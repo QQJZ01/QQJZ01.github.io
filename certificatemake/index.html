@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="ANSI">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -91,11 +91,11 @@
 <body>
     <div class="preview">
         <img src="./assets/certificate-1.jpg">
-        <input class="name" type="text" placeholder="»ñ½±ÈË" />
+        <input class="name" type="text" placeholder="è·å¥–äºº" />
         <span class="colon">:</span>
-        <textarea class="detail" placeholder="»ñ½±³É¾Í"></textarea>
-        <textarea class="orgs" placeholder="°ä·¢»ú¹¹"></textarea>
-        <input class="date" type="text" placeholder="»ñ½±ÈÕÆÚ" />
+        <textarea class="detail" placeholder="è·å¥–æˆå°±"></textarea>
+        <textarea class="orgs" placeholder="é¢å‘æœºæ„"></textarea>
+        <input class="date" type="text" placeholder="è·å¥–æ—¥æœŸ" />
     </div>
     <canvas id="seal" width="200" height="200" style="opacity: 0;"></canvas>
     <canvas id="preview" width="768" height="531"></canvas>
@@ -103,22 +103,22 @@
         let certificate = document.getElementsByTagName('img').item(0);
 
         /**
-         * Ó¡ÕÂµÄÉú³É
+         * å°ç« çš„ç”Ÿæˆ
          */
         function seal(s) {
-            // ·ÀÖ¹×ªÈ¦È¦
+            // é˜²æ­¢è½¬åœˆåœˆ
             if (!s) return;
             let c = document.getElementById("seal");
             let ctx = c.getContext("2d");
             ctx.clearRect(0, 0, c.clientWidth, c.clientHeight);
             ctx.fillStyle = "rgb(196,38,29)";
             ctx.strokeStyle = "rgb(196,38,29)";
-            // Ó¡ÕÂµÄÍâ¿ò
+            // å°ç« çš„å¤–æ¡†
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.arc(100, 100, 96, 0, 2 * Math.PI);
             ctx.stroke();
-            // ĞÇĞÇµÄÉú³É
+            // æ˜Ÿæ˜Ÿçš„ç”Ÿæˆ
             ctx.beginPath();
             ctx.lineWidth = 1;
             let star_start_x = 76;
@@ -136,7 +136,7 @@
             ctx.lineTo(star_start_x + 20 + 7 + 6 + 20 - 16 + 5 - 16 - 18 + 6, star_start_y + 13)
             ctx.closePath()
             ctx.fill();
-            // Ó¡ÕÂÉÏĞı×ªµÄÎÄ×Ö
+            // å°ç« ä¸Šæ—‹è½¬çš„æ–‡å­—
             ctx.translate(100, 100);
             ctx.font = '26px Helvetica';
             let angle = 4 * Math.PI / (3 * (s.length - 1));
@@ -150,36 +150,36 @@
                 ctx.fillText(c, 0, 5);
                 ctx.restore();
             }
-            // ¹éÎ»
+            // å½’ä½
             ctx.rotate(-angle * (s.length - 1));
             ctx.rotate(-.8 * Math.PI);
             ctx.translate(-100, -100);
 
             return c.toDataURL()
         }
-        // Ô¤ÀÀ
+        // é¢„è§ˆ
         function preview(name, detail, orgs, date) {
             let c = document.getElementById("preview");
             let ctx = c.getContext("2d");
             console.log(certificate);
-            // Ö¤Êé±³¾°
+            // è¯ä¹¦èƒŒæ™¯
             ctx.drawImage(certificate, 0, 0, c.clientWidth, c.clientHeight);
             console.log("certificate.onload");
-            // »ñ½±ÈË
+            // è·å¥–äºº
             ctx.font = "22px Microsoft YaHei";
             ctx.textAlign = "center";
             ctx.textBaseline = "top";
             ctx.fillText(name, 102 + 255 / 2, 183);
-            // Ã°ºÅ
+            // å†’å·
             ctx.textAlign = "right";
             ctx.fillText(":", 102 + 255, 183);
-            // »ñ½±ÈËµ×Ïß
+            // è·å¥–äººåº•çº¿
             ctx.beginPath();
             ctx.moveTo(102, 220)
             ctx.lineTo(102 + 245, 220)
             ctx.stroke();
 
-            // »ñ½±³É¾Í
+            // è·å¥–æˆå°±
             let detailX = 147;
             let detailY = 237;
 
@@ -196,7 +196,7 @@
                 if (detail.charCodeAt(i) <= 255) detailX -= 16
             }
 
-            // °ä·¢»ú¹¹ 
+            // é¢å‘æœºæ„ 
             let orgX = c.clientWidth - 147 - 180;
             let orgY = 356
 
@@ -216,7 +216,7 @@
                     ctx.drawImage(img, c.clientWidth - 220 - i * 110, 350, 100, 100);
                 }
             }
-            // »æÖÆ»ñ½±ÈÕÆÚ
+            // ç»˜åˆ¶è·å¥–æ—¥æœŸ
             ctx.font = "14px Microsoft YaHei";
             ctx.textAlign = "left";
             ctx.textBaseline = "top";
@@ -238,39 +238,39 @@
         dateDom.addEventListener('input', checkPreview)
 
 
-        // ¼ì²éÊÇ·ñĞèÒªäÖÈ¾
+        // æ£€æŸ¥æ˜¯å¦éœ€è¦æ¸²æŸ“
         function checkPreview() {
             let name = nameDom.value;
             let detail = detailDom.value;
             let orgs = orgsDom.value;
             let date = dateDom.value;
             clearTimeout(timeoutId);
-            // ÔÊĞíäÖÈ¾
+            // å…è®¸æ¸²æŸ“
             if (name.trim() && detail.trim() && orgs.trim() && date.trim()) {
                 timeoutId = setTimeout(() => {
-                    console.log("äÖÈ¾");
+                    console.log("æ¸²æŸ“");
                     console.log(name, detail, orgs, date);
                     preview(name, detail, orgs, date)
                 }, 1000);
             }
         }
 
-        // Ê¾Àı
+        // ç¤ºä¾‹
         function sample() {
             nameDom.value = `xxx`;
-            detailDom.textContent = "Í¬Ñ§ÈÙ»ñ½ñÈÕÓÅĞã±Ê¼Ç\n                                         ÌØ·¢´ËÖ¤£¬ÒÔ×Ê¹ÄÀø¡£";
-            orgsDom.textContent = `Ê®Ò»×é×é³¤\nÊ®Ò»×é×éÎ¯»á°ä·¢`
-            dateDom.value = "2022Äê7ÔÂxÈÕ"
+            detailDom.textContent = "åŒå­¦è£è·ä»Šæ—¥ä¼˜ç§€ç¬”è®°\n                                         ç‰¹å‘æ­¤è¯ï¼Œä»¥èµ„é¼“åŠ±ã€‚";
+            orgsDom.textContent = `åä¸€ç»„ç»„é•¿\nåä¸€ç»„ç»„å§”ä¼šé¢å‘`
+            dateDom.value = "2022å¹´7æœˆxæ—¥"
             checkPreview()
         }
 
 
         let previewDom = document.getElementById("preview");
-        // ÏÂÔØ
+        // ä¸‹è½½
         function download() {
             let a = document.createElement('a');
             a.href = previewDom.toDataURL();
-            a.download = "ÈÙÓşÖ¤Êé.png";
+            a.download = "è£èª‰è¯ä¹¦.png";
             a.click();
         }
 
